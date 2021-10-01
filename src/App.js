@@ -1,10 +1,11 @@
+import Home from "./Pages/Home/Home";
 
-function App() {
+const App = () => {
   return (
     <>
-
+      <Home />
     </>
   );
-}
+};
 
 export default App;
