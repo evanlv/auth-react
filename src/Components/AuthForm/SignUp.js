@@ -7,15 +7,33 @@ import { AuthContext } from "../../context/AuthContext";
 import "./AuthForm.css";
 
 const SignUp = () => {
-  const [error, setError] = useState("");
-  const history = useHistory();
   const { signup } = useContext(AuthContext);
+  const [error, setError] = useState("");
+
+  const history = useHistory();
 
   const showModal = useSelector((state) => state);
+
   const dispatch = useDispatch();
 
   const closeModal = () => {
     dispatch({ type: "CLOSEMODAL" });
+  };
+
+  const toggleSignIn = () => {
+    dispatch({ type: "TOGGLEIN" });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (inputs.current[1].value !== inputs.current[2].value) {
+      setError("Passwords are not the same");
+      return;
+    }
+    await signup(inputs.current[0].value, inputs.current[1].value);
+    closeModal();
+    history.push("/loggedHome");
   };
 
   const inputs = useRef([]);
@@ -26,34 +44,24 @@ const SignUp = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (inputs.current[1].value !== inputs.current[2].value) {
-      setError("Passwords are not the same");
-      return;
-    }
-    await signup(inputs.current[0].value, inputs.current[2].value);
-    dispatch({ type: "CLOSEMODAL" });
-    history.push("/loggedHome");
-  };
-
   return (
     <div className={showModal.showSignUp ? "global-modal" : "hide-modal"}>
       <div className="overlay" onClick={closeModal}></div>
+
       <div className="container-modal">
         <form className="form-auth" onSubmit={handleSubmit}>
           <h2>Registration</h2>
 
-          <label htmlFor="mail">Email</label>
-          <input type="email" htmlFor="mail" required ref={addInputs} />
+          <label htmlFor="email">Email</label>
+          <input type="email" id="email" required ref={addInputs} />
 
           <label htmlFor="password">Password</label>
-          <input type="password" htmlFor="password" required ref={addInputs} />
+          <input type="password" id="password" required ref={addInputs} />
 
-          <label htmlFor="confirm-password">Confirm password</label>
+          <label htmlFor="confirmPassword">Confirm password</label>
           <input
             type="password"
-            htmlFor="confirm-password"
+            id="confirmPassword"
             required
             ref={addInputs}
           />
@@ -65,7 +73,9 @@ const SignUp = () => {
         <button className="btn-close" onClick={closeModal}>
           X
         </button>
-        <p className="bottom-help-txt"> Register</p>
+        <p className="bottom-help-txt" onClick={toggleSignIn}>
+          Need to connect?
+        </p>
       </div>
     </div>
   );
