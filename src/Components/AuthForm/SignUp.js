@@ -1,13 +1,14 @@
 import { useContext, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+
 import { AuthContext } from "../../context/AuthContext";
 
 import "./AuthForm.css";
 
 const SignUp = () => {
   const [error, setError] = useState("");
-  // const history = useHistory;
+  const history = useHistory();
   const { signup } = useContext(AuthContext);
 
   const showModal = useSelector((state) => state);
@@ -32,13 +33,8 @@ const SignUp = () => {
       return;
     }
     await signup(inputs.current[0].value, inputs.current[2].value);
-    // history.push("/loggedHome");
     dispatch({ type: "CLOSEMODAL" });
-
-    inputs.current.forEach((input) => {
-      input.value = "";
-    });
-    setError("");
+    history.push("/loggedHome");
   };
 
   return (
