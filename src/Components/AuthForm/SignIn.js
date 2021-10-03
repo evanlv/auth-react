@@ -51,7 +51,7 @@ const SignIn = () => {
           <h2>Connection</h2>
 
           <label htmlFor="email">Email</label>
-          <input type="email" id="email" required ref={addInputs} />
+          <input type="email" id="eail" required ref={addInputs} />
 
           <label htmlFor="password">Password</label>
           <input type="password" id="password" required ref={addInputs} />

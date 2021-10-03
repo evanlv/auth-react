@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import { auth } from "../firebase";
 
 export const AuthContext = createContext();
+
 export const AuthProvider = (props) => {
   const { children } = props;
 
@@ -11,7 +12,7 @@ export const AuthProvider = (props) => {
     return auth.createUserWithEmailAndPassword(email, password);
   };
   const login = (email, password) => {
-    return auth.signInUserWithEmailAndPassword(email, password);
+    return auth.signInWithEmailAndPassword(email, password);
   };
   const logout = () => {
     return auth.signOut();
